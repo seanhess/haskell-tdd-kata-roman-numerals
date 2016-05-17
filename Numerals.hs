@@ -3,7 +3,8 @@ module Numerals where
 import Numeric.Natural (Natural)
 
 -- When we have a good type system it's better to begin TDD by
--- designing the data types
+-- designing the data types. This will allow us to have something
+-- to check!
 
 
 type Thousands = Natural
@@ -20,7 +21,7 @@ data Roman10 = Roman10 Thousands Hundreds Tens Ones
 
 -- The roman representation of a digit for output
 data Numeral = I | V | X | L | C | D | M
-             deriving (Show, Eq)
+             deriving (Show, Eq, Bounded, Enum)
 
 
 --------------------------------------------------------------------
