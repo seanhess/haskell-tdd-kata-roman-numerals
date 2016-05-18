@@ -7,11 +7,10 @@ import Numeric.Natural (Natural)
 -- to check!
 
 
-type Thousands = Natural
-type Hundreds = Natural
-type Tens = Natural
-type Ones = Natural
-
+type Thousands = Int
+type Hundreds = Int
+type Tens = Int
+type Ones = Int
 
 -- Intermediate representation of a number in roman form.
 -- Tally base 10 digits
@@ -25,11 +24,14 @@ data Numeral = I | V | X | L | C | D | M
 
 
 --------------------------------------------------------------------
--- Next we want to define the type declarations for some of the functions
--- we will be using to make sure our design is consistent
 
 fromNatural :: Natural -> Roman10
-fromNatural = undefined
+fromNatural n =
+    let i = fromIntegral n
+        (thousands, rest) = quotRem i 1000
+        (hundreds, rest') = quotRem rest 100
+        (tens, ones) = quotRem rest' 10
+    in Roman10 thousands hundreds tens ones
 
 toNatural :: Roman10 -> Natural
 toNatural = undefined
@@ -37,12 +39,49 @@ toNatural = undefined
 fromNumerals :: [Numeral] -> Roman10
 fromNumerals = undefined
 
-toNumerals :: Roman10 -> [Numeral]
-toNumerals = undefined
+toNumerals :: Roman10 -> [[Numeral]]
+toNumerals (Roman10 n1000 n100 n10 n1) =
+    [ numeralThousands n1000
+    , numeralHundreds n100
+    , numeralTens n10
+    , numeralOnes n1
+    ]
+  where
+    numeralThousands :: Thousands -> [Numeral]
+    numeralThousands nt = replicate nt M
 
--- these will be our top-level functions
+    -- it can only have 0-9
+    numeralHundreds :: Hundreds -> [Numeral]
+    numeralHundreds 9 = [C,M]
+    numeralHundreds 8 = [D,C,C,C]
+    numeralHundreds 7 = [D,C,C]
+    numeralHundreds 6 = [D,C]
+    numeralHundreds 5 = [D]
+    numeralHundreds 4 = [C,D]
+    numeralHundreds n = replicate n C
+
+    numeralTens :: Tens -> [Numeral]
+    numeralTens 9 = [X,C]
+    numeralTens 8 = [L,X,X,X]
+    numeralTens 7 = [L,X,X]
+    numeralTens 6 = [L,X]
+    numeralTens 5 = [L]
+    numeralTens 4 = [X,L]
+    numeralTens n = replicate n X
+
+    numeralOnes :: Ones -> [Numeral]
+    numeralOnes 9 = [I,X]
+    numeralOnes 8 = [V,I,I,I]
+    numeralOnes 7 = [V,I,I]
+    numeralOnes 6 = [V,I]
+    numeralOnes 5 = [V]
+    numeralOnes 4 = [I,V]
+    numeralOnes n = replicate n I
+
+-- I can't think of any other ways to create definitions that
+-- pass without implementing the function
 convertArabicToNumerals :: Natural -> [Numeral]
-convertArabicToNumerals _ = [I] -- add the minimally complete definition to pass the test
+convertArabicToNumerals = concat . toNumerals . fromNatural
 
 convertRomanToNumerals :: [Numeral] -> Natural
 convertRomanToNumerals = undefined
@@ -56,8 +95,4 @@ toString = undefined
 fromString :: String -> Maybe [Numeral]
 fromString = undefined
 
-
-
--- The problem is broken down into solveable pieces. We've verified that our type
--- design makes sense. It's time to go write some tests
 

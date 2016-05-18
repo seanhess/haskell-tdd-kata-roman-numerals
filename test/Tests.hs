@@ -9,6 +9,7 @@ import Numeric.Natural (Natural)
 import Test.QuickCheck
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
+import Test.Tasty.HUnit
 
 -- QuickCheck is bigger than a traditional testing system. Instead of manually
 -- describing results for individual inputs, we describe our assumptions as "properties"
@@ -49,12 +50,29 @@ prop_nonEmpty 0 = True
 prop_nonEmpty n = length (convertArabicToNumerals n) > 0
 
 
+-- unit tests ----------------------------------------
+-- at this point I would add the reversible property and just implement the function
+-- but to demonstrate a more TDD oriented approach, let's hand-code some unit tests:
+
+unitTests = testGroup "Unit tests"
+  [ testCase "Simple ones" $
+      convertArabicToNumerals 3 @?= [I,I,I]
+
+  , testCase "Simple subtraction" $
+      convertArabicToNumerals 4 @?= [I,V]
+
+  , testCase "Simple addition" $
+      convertArabicToNumerals 11 @?= [X,I]
+  ]
 
 
 -- Test Suite ----------------------------------
 
 
-main = defaultMain properties
+main = defaultMain tests
+
+tests :: TestTree
+tests = testGroup "Tests" [properties, unitTests]
 
 properties :: TestTree
 properties = testGroup "Properties"
