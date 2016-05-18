@@ -1,3 +1,8 @@
+Comments and Commit History
+---------------------------
+
+I added comments specific to particular commits to explain my work that I removed at the end. Please consider [walking through the commit history for the full context](https://github.com/seanhess/pillar-katas/commits/master)
+
 Running the Code
 ----------------
 
