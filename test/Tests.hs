@@ -3,7 +3,7 @@ module Main where
 
 -- If this were more than one kata, I would have a folder structure for these
 
-import Data.List (group)
+import Data.List (group, isInfixOf)
 import Numerals
 import Numeric.Natural (Natural)
 import Test.QuickCheck
@@ -75,6 +75,18 @@ prop_noRepeatVLD nat =
     where
       atMostOne n ns = length (filter (==n) ns) <= 1
 
+prop_subtractionsOnlyFromNext2Highest :: Natural -> Bool
+prop_subtractionsOnlyFromNext2Highest nat =
+    let nums = convertArabicToNumerals nat
+      in all (notContains nums) badSubtractions
+    where
+      notContains numerals bad = not (bad `isInfixOf` numerals)
+      badSubtractions =
+          [ [I,L], [I,C], [I,D], [I,M]
+          , [X,D], [X,M]
+          ]
+
+
 
 -- Test Suite ----------------------------------
 
@@ -88,5 +100,6 @@ properties :: TestTree
 properties = testGroup "Properties"
     [ QC.testProperty "The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row." prop_only3InRow
     , QC.testProperty "At least one numeral if above zero" prop_nonEmpty
-    , QC.testProperty "The symbols 'V', 'L', and 'D' can never be repeated" prop_nonEmpty
+    , QC.testProperty "The symbols 'V', 'L', and 'D' can never be repeated" prop_noRepeatVLD
+    , QC.testProperty "The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 2 next highest values " prop_subtractionsOnlyFromNext2Highest
     ]
