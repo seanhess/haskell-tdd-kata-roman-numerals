@@ -100,6 +100,14 @@ prop_onlyOneSubtractionPerNumeral nat =
 prop_reversible :: Natural -> Bool
 prop_reversible n = convertNumeralsToArabic (convertArabicToNumerals n) == n
 
+
+-- let's add another property for kicks now that we can reverse the process
+prop_addition :: Natural -> Bool
+prop_addition n = convertNumeralsToArabic (convertArabicToNumerals (n + 1)) == n + 1
+
+
+
+
 -- Test Suite ----------------------------------
 
 
@@ -116,4 +124,5 @@ properties = testGroup "Properties"
     , QC.testProperty "The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 2 next highest values " prop_subtractionsOnlyFromNext2Highest
     , QC.testProperty "Only one subtraction can be made per numeral ('XC' is allowed, 'XXC' is not)" prop_onlyOneSubtractionPerNumeral
     , QC.testProperty "Reversible" prop_reversible
+    , QC.testProperty "Adding one to number results in one more in the numeral" prop_reversible
     ]
