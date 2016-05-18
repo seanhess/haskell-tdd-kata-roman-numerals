@@ -17,6 +17,10 @@ type Ones = Int
 data Roman10 = Roman10 Thousands Hundreds Tens Ones
               deriving (Show, Eq)
 
+addRoman :: Roman10 -> Roman10 -> Roman10
+addRoman (Roman10 a1000 a100 a10 a1) (Roman10 b1000 b100 b10 b1) =
+    Roman10 (a1000 + b1000) (a100 + b100) (a10 + b10) (a1 + b1)
+
 
 -- The roman representation of a digit for output
 data Numeral = I | V | X | L | C | D | M
@@ -34,10 +38,27 @@ fromNatural n =
     in Roman10 thousands hundreds tens ones
 
 toNatural :: Roman10 -> Natural
-toNatural = undefined
+toNatural (Roman10 thousands hundreds tens ones) =
+    fromIntegral (ones + tens * 10 + hundreds * 100 + thousands * 1000)
 
 fromNumerals :: [Numeral] -> Roman10
-fromNumerals = undefined
+fromNumerals [] = Roman10 0 0 0 0
+fromNumerals (I : V : ns) = Roman10 0 0 0 4 `addRoman` fromNumerals ns
+fromNumerals (I : X : ns) = Roman10 0 0 0 9 `addRoman` fromNumerals ns
+fromNumerals (X : L : ns) = Roman10 0 0 4 0 `addRoman` fromNumerals ns
+fromNumerals (X : C : ns) = Roman10 0 0 9 0 `addRoman` fromNumerals ns
+fromNumerals (C : D : ns) = Roman10 0 4 0 0 `addRoman` fromNumerals ns
+fromNumerals (C : M : ns) = Roman10 0 9 0 0 `addRoman` fromNumerals ns
+fromNumerals (n : ns) = fromNumerals ns `addRoman`
+    case n of
+      I -> Roman10 0 0 0 1
+      V -> Roman10 0 0 0 5
+      X -> Roman10 0 0 1 0
+      L -> Roman10 0 0 5 0
+      C -> Roman10 0 1 0 0
+      D -> Roman10 0 5 0 0
+      M -> Roman10 1 0 0 0
+
 
 toNumerals :: Roman10 -> [[Numeral]]
 toNumerals (Roman10 n1000 n100 n10 n1) =
@@ -83,8 +104,8 @@ toNumerals (Roman10 n1000 n100 n10 n1) =
 convertArabicToNumerals :: Natural -> [Numeral]
 convertArabicToNumerals = concat . toNumerals . fromNatural
 
-convertRomanToNumerals :: [Numeral] -> Natural
-convertRomanToNumerals = undefined
+convertNumeralsToArabic :: [Numeral] -> Natural
+convertNumeralsToArabic = toNatural . fromNumerals
 
 -- It is tempting to make all our functions work with strings, 
 -- but we would lose type information. It's better to convert to a string

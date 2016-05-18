@@ -86,7 +86,19 @@ prop_subtractionsOnlyFromNext2Highest nat =
           , [X,D], [X,M]
           ]
 
+prop_onlyOneSubtractionPerNumeral :: Natural -> Bool
+prop_onlyOneSubtractionPerNumeral nat =
+    let nums = convertArabicToNumerals nat
+      in all (notContains nums) badSubtractions
+    where
+      notContains numerals bad = not (bad `isInfixOf` numerals)
+      badSubtractions =
+          [ [I,I,X], [X,X,C], [C,C,M] ]
 
+
+-- now let's get to feature 2. Reversibility is important for other properties too
+prop_reversible :: Natural -> Bool
+prop_reversible n = convertNumeralsToArabic (convertArabicToNumerals n) == n
 
 -- Test Suite ----------------------------------
 
@@ -102,4 +114,6 @@ properties = testGroup "Properties"
     , QC.testProperty "At least one numeral if above zero" prop_nonEmpty
     , QC.testProperty "The symbols 'V', 'L', and 'D' can never be repeated" prop_noRepeatVLD
     , QC.testProperty "The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 2 next highest values " prop_subtractionsOnlyFromNext2Highest
+    , QC.testProperty "Only one subtraction can be made per numeral ('XC' is allowed, 'XXC' is not)" prop_onlyOneSubtractionPerNumeral
+    , QC.testProperty "Reversible" prop_reversible
     ]
