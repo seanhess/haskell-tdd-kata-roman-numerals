@@ -65,6 +65,16 @@ unitTests = testGroup "Unit tests"
       convertArabicToNumerals 11 @?= [X,I]
   ]
 
+-- back to more properties -------------------------------
+
+-- now that I have a working definition lets add more properties to reflect the spec
+prop_noRepeatVLD :: Natural -> Bool
+prop_noRepeatVLD nat =
+      let nums = convertArabicToNumerals nat
+      in atMostOne V nums && atMostOne L nums && atMostOne D nums
+    where
+      atMostOne n ns = length (filter (==n) ns) <= 1
+
 
 -- Test Suite ----------------------------------
 
@@ -78,4 +88,5 @@ properties :: TestTree
 properties = testGroup "Properties"
     [ QC.testProperty "The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row." prop_only3InRow
     , QC.testProperty "At least one numeral if above zero" prop_nonEmpty
+    , QC.testProperty "The symbols 'V', 'L', and 'D' can never be repeated" prop_nonEmpty
     ]
