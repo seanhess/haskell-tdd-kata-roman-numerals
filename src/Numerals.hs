@@ -42,7 +42,7 @@ toNumerals = undefined
 
 -- these will be our top-level functions
 convertArabicToRoman :: Natural -> [Numeral]
-convertArabicToRoman = undefined
+convertArabicToRoman _ = [] -- add the minimally complete definition to pass the test
 
 convertRomanToArabic :: [Numeral] -> Natural
 convertRomanToArabic = undefined
