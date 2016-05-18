@@ -38,11 +38,16 @@ instance Arbitrary Roman10 where
 -- let's start with the following from the spec:
 -- The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row.
 prop_only3InRow :: Natural -> Bool
-prop_only3InRow = all only3 . filter checkable . group . convertArabicToRoman
+prop_only3InRow = all only3 . filter checkable . group . convertArabicToNumerals
     where
       only3 ns = length ns <= 3
       checkable = oneOf [I, X, C, M]
       oneOf set ns = head ns `elem` set
+
+prop_nonEmpty :: Natural -> Bool
+prop_nonEmpty 0 = True
+prop_nonEmpty n = length (convertArabicToNumerals n) > 0
+
 
 
 
@@ -53,4 +58,6 @@ main = defaultMain properties
 
 properties :: TestTree
 properties = testGroup "Properties"
-    [ QC.testProperty "The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row." prop_only3InRow ]
+    [ QC.testProperty "The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row." prop_only3InRow
+    , QC.testProperty "At least one numeral if above zero" prop_nonEmpty
+    ]

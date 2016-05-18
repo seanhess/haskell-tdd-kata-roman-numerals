@@ -41,11 +41,11 @@ toNumerals :: Roman10 -> [Numeral]
 toNumerals = undefined
 
 -- these will be our top-level functions
-convertArabicToRoman :: Natural -> [Numeral]
-convertArabicToRoman _ = [] -- add the minimally complete definition to pass the test
+convertArabicToNumerals :: Natural -> [Numeral]
+convertArabicToNumerals _ = [I] -- add the minimally complete definition to pass the test
 
-convertRomanToArabic :: [Numeral] -> Natural
-convertRomanToArabic = undefined
+convertRomanToNumerals :: [Numeral] -> Natural
+convertRomanToNumerals = undefined
 
 -- It is tempting to make all our functions work with strings, 
 -- but we would lose type information. It's better to convert to a string
