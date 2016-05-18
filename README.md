@@ -5,8 +5,8 @@ Running the Code
 
 ```
 $ stack ghci
-*Numerals Numerals> convertArabicToNumerals 148
-[C,X,L,V,I,I,I]
+*Numerals Numerals> toString (convertArabicToNumerals 148)
+"CXLVIII"
 ```
 
 Run the tests
@@ -48,10 +48,9 @@ Some comments are specific only to particular commits. I did this intentionally 
 Testing
 -----------------------------
 
-I assume the reader is not familiar with property based testing in my comments. Here are some references
+My comments assume the reader is not familiar with property based testing. Here are some references:
 
-- [An introduction to QuickCheck testing](https://www.schoolofhaskell.com/user/pbv/an-introduction-to-quickcheck-testing
+- [An introduction to QuickCheck testing](https://www.schoolofhaskell.com/user/pbv/an-introduction-to-quickcheck-testing)
 - [Functional TDD: A Clash of Cultures](https://www.facebook.com/notes/kent-beck/functional-tdd-a-clash-of-cultures/472392329460303) (Especially read the comments)
 - [TDD with QuickCheck](http://primitive-automaton.logdown.com/posts/142511/tdd-with-quickcheck)
-)
 - [Tasty](http://documentup.com/feuerbach/tasty)

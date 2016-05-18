@@ -107,13 +107,9 @@ convertArabicToNumerals = concat . toNumerals . fromNatural
 convertNumeralsToArabic :: [Numeral] -> Natural
 convertNumeralsToArabic = toNatural . fromNumerals
 
+
 -- It is tempting to make all our functions work with strings, 
 -- but we would lose type information. It's better to convert to a string
 -- at the boundary of our program. We'll stick with Numeral, Roman10, and Natural
 toString :: [Numeral] -> String
-toString = undefined
-
-fromString :: String -> Maybe [Numeral]
-fromString = undefined
-
-
+toString = concat . map show
