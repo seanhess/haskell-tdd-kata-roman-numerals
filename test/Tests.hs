@@ -1,8 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Main where
 
--- If this were more than one kata, I would have a folder structure for these
-
 import Data.List (group, isInfixOf)
 import Numerals
 import Numeric.Natural (Natural)

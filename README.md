@@ -39,12 +39,6 @@ All 10 tests passed (0.01s)
 ```
 
 
-Commit History and Comments
----------------------------
-
-Some comments are specific only to particular commits. I did this intentionally to show my work
-
-
 Testing
 -----------------------------
 

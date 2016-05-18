@@ -2,11 +2,6 @@ module Numerals where
 
 import Numeric.Natural (Natural)
 
--- When we have a good type system it's better to begin TDD by
--- designing the data types. This will allow us to have something
--- to check!
-
-
 type Thousands = Int
 type Hundreds = Int
 type Tens = Int
@@ -37,9 +32,11 @@ fromNatural n =
         (tens, ones) = quotRem rest' 10
     in Roman10 thousands hundreds tens ones
 
+
 toNatural :: Roman10 -> Natural
 toNatural (Roman10 thousands hundreds tens ones) =
     fromIntegral (ones + tens * 10 + hundreds * 100 + thousands * 1000)
+
 
 fromNumerals :: [Numeral] -> Roman10
 fromNumerals [] = Roman10 0 0 0 0
@@ -99,17 +96,14 @@ toNumerals (Roman10 n1000 n100 n10 n1) =
     numeralOnes 4 = [I,V]
     numeralOnes n = replicate n I
 
--- I can't think of any other ways to create definitions that
--- pass without implementing the function
+
 convertArabicToNumerals :: Natural -> [Numeral]
 convertArabicToNumerals = concat . toNumerals . fromNatural
+
 
 convertNumeralsToArabic :: [Numeral] -> Natural
 convertNumeralsToArabic = toNatural . fromNumerals
 
 
--- It is tempting to make all our functions work with strings, 
--- but we would lose type information. It's better to convert to a string
--- at the boundary of our program. We'll stick with Numeral, Roman10, and Natural
 toString :: [Numeral] -> String
 toString = concat . map show
