@@ -8,6 +8,10 @@ Running the Code
     $ stack ghci
     > main
 
+Run the tests
+
+    $ stack test
+
 References / Further Reading
 ----------------------------
 - [An introduction to QuickCheck testing](https://www.schoolofhaskell.com/user/pbv/an-introduction-to-quickcheck-testing

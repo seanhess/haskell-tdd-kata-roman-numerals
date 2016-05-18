@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Tests where
+module Main where
 
 -- If this were more than one kata, I would have a folder structure for these
 
