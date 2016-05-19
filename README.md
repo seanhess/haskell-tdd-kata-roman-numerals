@@ -1,7 +1,24 @@
+Roman Numerals Kata
+--------------------
+
+The kata is to convert Arabic numerals into Roman and back again: http://agilekatas.co.uk/katas/romannumerals-kata
+
+I wrote this to demonstrate a TDD approach in Haskell using property-based testing and QuickCheck.
+
 Comments and Commit History
 ---------------------------
 
-I added comments specific to particular commits to explain my work that I removed at the end. Please consider [walking through the commit history for the full context](https://github.com/seanhess/pillar-katas/commits/master)
+I added comments specific to particular commits to explain my work that I removed at the end. Please consider [walking through the commit history for the full context:
+
+1. Outline data types ([Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/1384d445864c68d25e137ee1096fa099e5f9c934/Numerals.hs))
+2. Outline function types ([Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/a56e85644a9207756bba1a14eb690e20b3732c16/Numerals.hs))
+3. First property: only 3 V, L, or D in a row ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/23c22158c029eb4e39018ef7118949459a93d993/test/Tests.hs), [Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/23c22158c029eb4e39018ef7118949459a93d993/src/Numerals.hs))
+4. Property: At least one numeral if above zero ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/87d482c400da49e01e7fc4468779410a35d7b04b/test/Tests.hs), [Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/87d482c400da49e01e7fc4468779410a35d7b04b/src/Numerals.hs))
+5. Units tests: ones, subtraction and addition ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/1bbf03a462d256680e7b154dffaebeb5033a285a/test/Tests.hs), [Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/1bbf03a462d256680e7b154dffaebeb5033a285a/src/Numerals.hs))
+6. Property: The symbols 'V', 'L', and 'D' can never be repeated ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/commit/a7c9c05424944229e781ff58b26ecdc9546f43ed))
+7. Property: The 1 symbols can only be subtracted from the next 2 numerals ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/commit/db806cd7914eabeb4695da400c806cd41f63c891))
+8. Property: Reversible. Implement feature 2 ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/5fb3fb380f237ab11e7cc663f6846b4e379cd94d/test/Tests.hs), [Numerals.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/blob/5fb3fb380f237ab11e7cc663f6846b4e379cd94d/src/Numerals.hs))
+9. Property: Adding one to number results in one more in the numeral ([Tests.hs](https://github.com/seanhess/haskell-tdd-kata-roman-numerals/commit/a27ac5c8d38444837dc17118b7fa22fe349d4f26))
 
 Running the Code
 ----------------
